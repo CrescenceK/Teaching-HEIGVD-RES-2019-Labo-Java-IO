@@ -77,7 +77,7 @@ public class Application implements IApplication {
   }
 
   @Override
-  public void fetchAndStoreQuotes(int numberOfQuotes)  {
+  public void fetchAndStoreQuotes(int numberOfQuotes) throws IOException {
     try {
       clearOutputDirectory();
     } catch (IOException e) {
@@ -120,12 +120,13 @@ public class Application implements IApplication {
    * @param filename the name of the file to create and where to store the quote text
    * @throws IOException
    */
-  void storeQuote(Quote quote, String filename)  {
+  void storeQuote(Quote quote, String filename) throws IOException {
     /*path*/
     String path = WORKSPACE_DIRECTORY + File.separator;
     for(String tag : quote.getTags()) {
       path += tag + File.separator;
 
+    }
       /* creation of tags tree */
       new File(path).mkdirs();
 
@@ -140,14 +141,17 @@ public class Application implements IApplication {
         w.flush();
         w.close();
       } catch (UnsupportedEncodingException e) {
+        LOG.log(Level.SEVERE, "Could not support the encoding. {0}", e.getMessage());
         e.printStackTrace();
       } catch (FileNotFoundException e) {
+        LOG.log(Level.SEVERE, "Have not found file or directory. {0}", e.getMessage());
         e.printStackTrace();
       } catch (IOException e) {
+        LOG.log(Level.SEVERE, "Could not print the name of the encountered file or directory. {0}", e.getMessage());
         e.printStackTrace();
       }
     }
-  }
+
 
   /**
    * This method uses a IFileExplorer to explore the file system and prints the name of each
@@ -160,9 +164,11 @@ public class Application implements IApplication {
       public void visit(File file) {
 
         try {
-          writer.write(file.getPath() + "\n");
-          writer.flush();
+          writer.write(file.getPath());
+          writer.write("\n");
+           writer.flush();
         } catch (IOException e) {
+          LOG.log(Level.SEVERE, "Could not print the name of the encountered file or directory. {0}", e.getMessage());
           e.printStackTrace();
         }
       }

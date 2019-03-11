@@ -3,6 +3,7 @@ package ch.heigvd.res.labio.impl.explorers;
 import ch.heigvd.res.labio.interfaces.IFileExplorer;
 import ch.heigvd.res.labio.interfaces.IFileVisitor;
 import java.io.File;
+import java.io.FileFilter;
 
 /**
  * This implementation of the IFileExplorer interface performs a depth-first
@@ -16,19 +17,39 @@ public class DFSFileExplorer implements IFileExplorer {
 
   @Override
   public void explore(File rootDirectory, IFileVisitor vistor) {
+
+    /* visit current directory */
     vistor.visit(rootDirectory);
 
-    for(File f : rootDirectory.listFiles()) {
-      if (f.isFile()) {
-        vistor.visit(f);
+    File[] directories = rootDirectory.listFiles(new FileFilter() {
+      @Override
+      public boolean accept(File pathname) {
+        return pathname.isDirectory();
+      }
+    });
+
+    File[] files = rootDirectory.listFiles(new FileFilter() {
+      @Override
+      public boolean accept(File pathname) {
+        return !pathname.isDirectory();
+      }
+    });
+
+    /* visit sub-directories */
+    if(directories != null) {
+      for (File f : directories) {
+        if (f != null) {
+          explore(f, vistor);
+        }
       }
     }
 
-    for(File f : rootDirectory.listFiles()) {
-      if(f.isDirectory()){
-        vistor.visit(f);
-        explore(f, vistor);
-
+    /* visit files */
+    if(files != null) {
+      for (File f : files) {
+        if (f != null) {
+          vistor.visit(f);
+        }
       }
     }
   }
