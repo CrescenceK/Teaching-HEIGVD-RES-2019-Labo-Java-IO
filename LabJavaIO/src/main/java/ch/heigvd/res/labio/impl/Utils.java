@@ -1,5 +1,6 @@
 package ch.heigvd.res.labio.impl;
 
+import java.util.LinkedList;
 import java.util.logging.Logger;
 
 /**
@@ -20,7 +21,23 @@ public class Utils {
    * contain any line separator, then the first element is an empty string.
    */
   public static String[] getNextLine(String lines) {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+    /* list of eventuals separators*/
+     final String[] separators = new String[]{ "\r\n", "\r", "\n"};
+
+        /* searching separator into lines */
+       for(String str : separators){
+
+         /* we have found a seperator*/
+         if(lines.indexOf(str) != -1 ){
+
+           /* fill the board ti return*/
+           return (new String[] {lines.substring(0,lines.indexOf(str) + str.length()), lines.substring(lines.indexOf(str) + str.length())});
+         }
+       }
+
+       /* we have not found any separators into line */
+        return (new String[] {"", lines});
   }
 
 }
