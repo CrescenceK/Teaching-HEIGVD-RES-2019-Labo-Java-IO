@@ -57,8 +57,6 @@ public class FileNumberingFilterWriter extends FilterWriter {
   @Override
   public void write(int c) throws IOException {
 
-    int charBefore = 0;
-
     // print the first line number.
     if(numberOfLine == 1){
       out.write((numberOfLine++) + "\t");
@@ -71,13 +69,6 @@ public class FileNumberingFilterWriter extends FilterWriter {
     } else {
       out.write(c);
     }
-   /* } else if (charBefore  == '\r'){
-     out.write((numberOfLine) + "\t");
-      out.write(c);
-    } else {
-      out.write(c);
-    }
-    charBefore = c; */
   }
 
 }
