@@ -21,6 +21,7 @@ public class FileNumberingFilterWriter extends FilterWriter {
 
   private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
   private int numberOfLine = 1;
+  int charBefore = 0;
 
 
   public FileNumberingFilterWriter(Writer out) {
@@ -60,15 +61,26 @@ public class FileNumberingFilterWriter extends FilterWriter {
     // print the first line number.
     if(numberOfLine == 1){
       out.write((numberOfLine++) + "\t");
+      out.flush();
     }
 
-    //
     if(c == '\n') {
       out.write(c);
       out.write((numberOfLine++) + "\t");
-    } else {
-      out.write(c);
+      out.flush();
+      charBefore = c;
     }
+    else
+    {
+      if (charBefore == '\r'){
+        out.write((numberOfLine++) + "\t");
+        out.flush();
+      }
+      out.write(c);
+      out.flush();
+      charBefore = c;
+    }
+
   }
 
 }

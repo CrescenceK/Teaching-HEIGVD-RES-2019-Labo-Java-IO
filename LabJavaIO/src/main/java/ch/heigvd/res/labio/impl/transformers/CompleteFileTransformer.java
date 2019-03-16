@@ -16,9 +16,8 @@ import ch.heigvd.res.labio.impl.filters.UpperCaseFilterWriter;
 public class CompleteFileTransformer extends FileTransformer {
 
   @Override
-  public Writer decorateWithFilters(Writer writer) {
+  public Writer decorateWithFilters(Writer writer)  {
     writer = new FileNumberingFilterWriter(new UpperCaseFilterWriter(writer));
     return writer; 
   }
-
 }
