@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 public class FileNumberingFilterWriter extends FilterWriter {
 
   private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
+  private int numberOfLine = 1;
+
 
   public FileNumberingFilterWriter(Writer out) {
     super(out);
@@ -28,36 +30,54 @@ public class FileNumberingFilterWriter extends FilterWriter {
   @Override
   public void write(String str, int off, int len) throws IOException {
 
-    /* first sentence */
-    String current = Utils.getNextLine(str.substring(off, off + len))[0];
-    /* next sentences */
-    String next    =  Utils.getNextLine(str.substring(off, off + len))[1];
-    int i = 1;
-    //String string = "";
+    //recovering our strings
+    String[] strings = Utils.getNextLine(str.substring(off, off + len));
 
-
-    String string = i == 1 ? i + "\t" : "" ;
-    i++;
-
-    while (current.length() != 0) {
-      string += current + i + "\t";
-      current = Utils.getNextLine(next)[0];
-      i++;
+    // print the first line number.
+    if(numberOfLine == 1){
+        out.write((numberOfLine++) + "\t");
     }
 
-    string += next;
-    super.write(string, 0, string.length());
+    //write the first the current line and the next line number.
+    while (strings[0].length() != 0) {
+      out.write(strings[0] + (numberOfLine++) + "\t");
+      strings = Utils.getNextLine(strings[1]);
+    }
+
+      // restart the process for other lines.
+      out.write(strings[1]);
     }
 
 
   @Override
   public void write(char[] cbuf, int off, int len) throws IOException {
-
+       this.write(new String(cbuf), off, len);
   }
 
   @Override
   public void write(int c) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+    int charBefore = 0;
+
+    // print the first line number.
+    if(numberOfLine == 1){
+      out.write((numberOfLine++) + "\t");
+    }
+
+    //
+    if(c == '\n') {
+      out.write(c);
+      out.write((numberOfLine++) + "\t");
+    } else {
+      out.write(c);
+    }
+   /* } else if (charBefore  == '\r'){
+     out.write((numberOfLine) + "\t");
+      out.write(c);
+    } else {
+      out.write(c);
+    }
+    charBefore = c; */
   }
 
 }
