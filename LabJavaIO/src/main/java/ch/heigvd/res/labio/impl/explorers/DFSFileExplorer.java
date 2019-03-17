@@ -35,20 +35,20 @@ public class DFSFileExplorer implements IFileExplorer {
       }
     });
 
-    /* visit sub-directories */
-    if(directories != null) {
-      for (File f : directories) {
-        if (f != null) {
-          explore(f, vistor);
-        }
-      }
-    }
-
     /* visit files */
     if(files != null) {
       for (File f : files) {
         if (f != null) {
           vistor.visit(f);
+        }
+      }
+    }
+
+    /* visit sub-directories */
+    if(directories != null) {
+      for (File f : directories) {
+        if (f != null) {
+          explore(f, vistor);
         }
       }
     }

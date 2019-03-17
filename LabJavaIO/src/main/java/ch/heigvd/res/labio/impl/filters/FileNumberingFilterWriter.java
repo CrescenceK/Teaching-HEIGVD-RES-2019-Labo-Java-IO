@@ -61,7 +61,7 @@ public class FileNumberingFilterWriter extends FilterWriter {
     // print the first line number.
     if(numberOfLine == 1){
       out.write((numberOfLine++) + "\t");
-      // .flush();
+      out.flush();
     }
 
     if(c == '\n') {
