@@ -36,7 +36,7 @@ public class CompleteFileTransformerTest {
     
     transformer.visit(inputFile);
     assertTrue( FileUtils.contentEquals(expectedFile, outputFile) );
-    FileUtils.deleteDirectory(new File("./tmp"));
+   // FileUtils.deleteDirectory(new File("./tmp"));
   }
 
 }

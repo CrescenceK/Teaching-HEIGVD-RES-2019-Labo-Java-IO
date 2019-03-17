@@ -122,9 +122,9 @@ public class Application implements IApplication {
    */
   void storeQuote(Quote quote, String filename) throws IOException {
     /*path*/
-    String path = WORKSPACE_DIRECTORY + File.separator;
+    String path = WORKSPACE_DIRECTORY + "/" /*File.separator*/;
     for(String tag : quote.getTags()) {
-      path += tag + File.separator;
+      path += tag + "/" /* File.separator */;
 
     }
       /* creation of tags tree */
