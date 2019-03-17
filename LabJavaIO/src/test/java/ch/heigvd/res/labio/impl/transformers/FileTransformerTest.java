@@ -30,4 +30,5 @@ public class FileTransformerTest {
     assertTrue( FileUtils.contentEquals(inputFile, outputFile) );
     FileUtils.deleteDirectory(new File("./target/tmp"));
   }
+  
 }
