@@ -22,6 +22,7 @@ public class FileNumberingFilterWriter extends FilterWriter {
   private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
   private int numberOfLine = 1;
   int charBefore = 0;
+  boolean charBeforeWasR = false;
 
 
   public FileNumberingFilterWriter(Writer out) {

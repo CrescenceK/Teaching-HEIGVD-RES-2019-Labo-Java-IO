@@ -122,19 +122,19 @@ public class Application implements IApplication {
    */
   void storeQuote(Quote quote, String filename) throws IOException {
     /*path*/
-    String path = WORKSPACE_DIRECTORY + "/" /*File.separator*/;
+    String path = WORKSPACE_DIRECTORY + File.separator;
     for(String tag : quote.getTags()) {
-      path += tag + "/" /* File.separator */;
+      path = path + tag + File.separator;
 
     }
       /* creation of tags tree */
       new File(path).mkdirs();
 
       /* construction of file quote with name */
-      File quoteFile = new File(path + filename);
+      File quoteFile = new File(  path + filename );
 
       /* quote storage */
-      Writer w = null;
+      OutputStreamWriter w = null;
       try {
         w = new OutputStreamWriter(new FileOutputStream(quoteFile), "UTF-8");
         w.write(quote.getQuote());
@@ -164,14 +164,14 @@ public class Application implements IApplication {
       public void visit(File file) {
 
         try {
-          writer.write(file.getPath());
-          writer.write("\n");
-           writer.flush();
+          writer.write(file.getPath() + "\n");
+          // writer.flush();
         } catch (IOException e) {
           LOG.log(Level.SEVERE, "Could not print the name of the encountered file or directory. {0}", e.getMessage());
           e.printStackTrace();
         }
       }
+
     });
   }
 
