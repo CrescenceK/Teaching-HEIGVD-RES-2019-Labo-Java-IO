@@ -65,6 +65,7 @@ public class FileNumberingFilterWriter extends FilterWriter {
       out.flush();
     }
 
+    // in this case, we print "\n" and the line number
     if(c == '\n') {
       out.write(c);
       out.write((numberOfLine++) + "\t");
@@ -73,10 +74,12 @@ public class FileNumberingFilterWriter extends FilterWriter {
     }
     else
     {
+      // in this case, just print the line number
       if (charBefore == '\r'){
         out.write((numberOfLine++) + "\t");
         out.flush();
       }
+      // otherwise print the character
       out.write(c);
       out.flush();
       charBefore = c;

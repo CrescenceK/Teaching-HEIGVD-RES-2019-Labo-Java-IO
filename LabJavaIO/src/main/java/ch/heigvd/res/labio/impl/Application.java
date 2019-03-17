@@ -152,7 +152,6 @@ public class Application implements IApplication {
       }
     }
 
-
   /**
    * This method uses a IFileExplorer to explore the file system and prints the name of each
    * encountered file and directory.
@@ -165,7 +164,7 @@ public class Application implements IApplication {
 
         try {
           writer.write(file.getPath() + "\n");
-          // writer.flush();
+          writer.flush();
         } catch (IOException e) {
           LOG.log(Level.SEVERE, "Could not print the name of the encountered file or directory. {0}", e.getMessage());
           e.printStackTrace();
